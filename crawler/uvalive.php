@@ -63,9 +63,8 @@
             echo "UVALive $pid Already Exist, pid:$num.<br>\n";
             //continue;
         }
-        $tpid=intval($pid)-1999;
-        if ($pid>5722) $tpid+=10;
-        $url="http://livearchive.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=".$tpid;
+        $url="";
+        list($url)=mysql_fetch_array(mysql_query("select url from vurl where voj='UVALive' and vid='$pid'"));
         $content=file_get_contents($url);
         //$content=iconv("gbk","UTF-8",$content);
         //echo htmlspecialchars($content);
@@ -123,8 +122,8 @@
             $source="";
             $spj=0;
 
-if ($num=="") $sql_add_pro = "insert into problem (title,description,input,output,sample_in,sample_out,hint,source,hide,memory_limit,time_limit,special_judge_status,case_time_limit,basic_solver_value,number_of_testcase,isvirtual,vname,vid) values ('".addslashes($title)."','".addslashes($desc)."','".addslashes($inp)."','".addslashes($oup)."','".addslashes($sin)."','".addslashes($sout)."','".addslashes($hint)."','".addslashes($source)."','0','$mem_limit','$time_limit','$spj','$case_limit','0','0',1,'UVALive','$pid')";
-else $sql_add_pro = "update problem set title='".addslashes($title)."',description='".addslashes($desc)."',input='".addslashes($inp)."',output='".addslashes($oup)."',sample_in='".addslashes($sin)."',sample_out='".addslashes($sout)."',hint='".addslashes($hint)."',source='".addslashes($source)."',hide='0',memory_limit='$mem_limit',time_limit='$time_limit',special_judge_status='$spj',case_time_limit='$case_limit',vname='UVALive',vid='$pid' where pid= $num";
+if ($num=="") $sql_add_pro = "insert into problem (title,description,input,output,sample_in,sample_out,hint,hide,memory_limit,time_limit,special_judge_status,case_time_limit,basic_solver_value,number_of_testcase,isvirtual,vname,vid) values ('".addslashes($title)."','".addslashes($desc)."','".addslashes($inp)."','".addslashes($oup)."','".addslashes($sin)."','".addslashes($sout)."','".addslashes($hint)."','0','$mem_limit','$time_limit','$spj','$case_limit','0','0',1,'uvalive','$pid')";
+else $sql_add_pro = "update problem set title='".addslashes($title)."',description='".addslashes($desc)."',input='".addslashes($inp)."',output='".addslashes($oup)."',sample_in='".addslashes($sin)."',sample_out='".addslashes($sout)."',hint='".addslashes($hint)."',hide='0',memory_limit='$mem_limit',time_limit='$time_limit',special_judge_status='$spj',case_time_limit='$case_limit',vname='uvalive',vid='$pid' where pid= $num";
 
             //$search  = array('\n', '\t', '\r');
             //$replace = array('\\n', '\\t', '\\r');

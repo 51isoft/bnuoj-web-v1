@@ -2,7 +2,7 @@
 	include("conn.php");
 //    include_once('latexrender/latex.php');
     $pid = $_GET['pid'];
-	$querypage="select count(*) from problem where pid<$pid and hide=0";
+	$querypage="select count(*) from problem where pid<'$pid' and hide=0";
 	list($ppage)=mysql_fetch_array(mysql_query($querypage));
 	$ppage=intval($ppage/$problemperpage)+1;
 	$query="select title,description,input,output,sample_in,sample_out,hint,source,time_limit,case_time_limit,memory_limit,total_submit,total_ac,special_judge_status,hide,vid,vname from problem where pid='$pid'";
@@ -55,9 +55,8 @@
             if ($vname=="SCU")  echo "<a href='http://cstest.scu.edu.cn/soj/problem.action?id=$vid' target='_blank'>$vid</a>";
             if ($vname=="HUST")  echo "<a href='http://acm.hust.edu.cn/problem.php?id=$vid' target='_blank'>$vid</a>";
             if ($vname=="UVALive")  {
-                $tvid=intval($vid)-1999;
-                if (intval($vid)>5722) $tvid+=10;
-                echo "<a href='http://livearchive.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=".$tvid."' target='_blank'>$vid</a>";
+                list($url)=mysql_fetch_array(mysql_query("select url from vurl where voj='UVALive' and vid='$vid'"));
+                echo "<a href='$url' target='_blank'>$vid</a>";
             }
             if ($vname=="UVA")  {
                 list($url)=mysql_fetch_array(mysql_query("select url from vurl where voj='UVA' and vid='$vid'"));
@@ -66,7 +65,8 @@
             echo ".</b></font></center><br>";
         }
         echo "\n<p align=right><a href=problem_show.php?pid=".(intval($pid)-1)." class=bottom_link>[Prev]</a><a href=problem_show.php?pid=".(intval($pid)+1)." class=bottom_link>[Next]</a></p>";
-		echo "\n<h3>Description</h3><br>\n";
+        echo "\n<h3>Description</h3><br>\n";
+        $desc=preg_replace('/<head[\s\S]*\/head>/', "", $desc);
 		echo latex_content($desc)."<br>\n";
 		echo "<h3>Input</h3><br>\n";
 		echo latex_content($inp)."<br>\n";

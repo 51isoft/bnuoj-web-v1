@@ -1,6 +1,6 @@
 <?php
 	include("conn.php");
-//    include_once('latexrender/latex.php');
+    include_once('latexrender/latex.php');
 	$cpid = $_GET['cpid'];
 	$query = "select contest_problem.cid,contest_problem.pid,contest_problem.lable,contest.isprivate from contest_problem,contest where contest_problem.cpid='$cpid' and contest.cid=contest_problem.cid";
 	$result = mysql_query($query);
@@ -62,7 +62,8 @@
 		echo "Time Limit: $tl ms &nbsp;&nbsp;&nbsp; Case Time Limit: $ctl ms &nbsp;&nbsp;&nbsp; Memory Limit: $ml KB<br>";
 		if ($spj==false) echo "Submit: $ts &nbsp;&nbsp;&nbsp; Accepted: $tac <br></center>";
 		else echo "Submit: $ts &nbsp;&nbsp;&nbsp; Accepted: $tac &nbsp;&nbsp;&nbsp; <font color=red><strong>Special Judge</strong></font><br></center>";
-		echo "\n<h3>Description</h3><br>\n";
+        echo "\n<h3>Description</h3><br>\n";
+        $desc=preg_replace('/<head[\s\S]*\/head>/', "", $desc);
 		echo latex_content($desc)."<br>\n";
 		echo "<h3>Input</h3><br>\n";
 		echo latex_content($inp)."<br>\n";

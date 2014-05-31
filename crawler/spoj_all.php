@@ -4,8 +4,8 @@ include("simple_html_dom.php");
 ?>
 <center>
 <?php
-for ($i=0;$i<13;$i++) {
-    $html=file_get_html("http://www.spoj.pl/problems/tutorial/sort=0,start=".($i*50));
+for ($i=0;$i<18;$i++) {
+    $html=file_get_html("http://www.spoj.com/problems/tutorial/sort=0,start=".($i*50));
     $table=$html->find("table.problems",0);
     $rows=$table->find("tr");
     for ($j=1;$j<sizeof($rows);$j++) {
@@ -18,8 +18,8 @@ for ($i=0;$i<13;$i++) {
     }
     //die();
 }
-for ($i=0;$i<50;$i++) {
-    $html=file_get_html("http://www.spoj.pl/problems/classical/sort=0,start=".($i*50));
+for ($i=0;$i<59;$i++) {
+    $html=file_get_html("http://www.spoj.com/problems/classical/sort=0,start=".($i*50));
     $table=$html->find("table.problems",0);
     $rows=$table->find("tr");
     for ($j=1;$j<sizeof($rows);$j++) {
